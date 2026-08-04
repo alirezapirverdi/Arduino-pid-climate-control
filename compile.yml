@@ -1,0 +1,25 @@
+name: Compile Sketch
+
+on:
+  push:
+    paths:
+      - "ClimateControlPID/**"
+      - ".github/workflows/compile.yml"
+  pull_request:
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compile for Arduino Uno
+        uses: arduino/compile-sketches@v1
+        with:
+          fqbn: arduino:avr:uno
+          sketch-paths: |
+            - ClimateControlPID
+          libraries: |
+            - name: DHT sensor library
+            - name: Adafruit Unified Sensor
+            - name: LiquidCrystal I2C
